@@ -1,6 +1,6 @@
 /**
  * letters - An experimental plugin for animating SVG letters using Segment.
- * @version v0.0.1
+ * @version v0.0.2
  * @link https://github.com/lmgonzalves/letters
  * @license MIT
  */
@@ -271,22 +271,22 @@ Letters.prototype = {
         var svgLarge = {width: (width + (2 * radius)), height: height};
         var svgFJRT = {width: (width - radius - _weight), height: height};
         var svgSXZ = {width: (width - (2 * _weight)), height: height};
-        var p50plus23 = '50% + ' + (radius + _weight);
-        var p50minus23 = '50% - ' + (radius + _weight);
-        var p50minus20 = '50% - ' + radius;
-        var p50minus35 = '50% - ' + (radius + _weight + 12);
+        var p50plusRW = '50% + ' + (radius + _weight);
+        var p50minusRW = '50% - ' + (radius + _weight);
+        var p50minusR = '50% - ' + radius;
+        var p50minusRW12 = '50% - ' + (radius + _weight + 12);
         this.alphabet = {
             'a': {
                 svg: svgSmall,
                 paths: [circleCenter, lineRight],
                 initial: [{begin: '5%', end: '5%'}, {begin: '90%', end: '90%'}],
-                final: [{begin: '50%', end: '125% + 1'}, {begin: '50%', end: p50plus23}]
+                final: [{begin: '50%', end: '125% + 1'}, {begin: '50%', end: p50plusRW}]
             },
             'b': {
                 svg: svgSmall,
                 paths: [circleCenter, lineLeft],
                 initial: [{begin: '-125%', end: '-125%'}, {begin: '5%', end: '5%'}],
-                final: [{begin: '-125%', end: '-50%'}, {begin: p50minus35, end: p50plus23}]
+                final: [{begin: '-125%', end: '-50%'}, {begin: p50minusRW12, end: p50plusRW}]
             },
             'c': {
                 svg: svgSmall,
@@ -298,67 +298,67 @@ Letters.prototype = {
                 svg: svgSmall,
                 paths: [circleCenter, lineRight],
                 initial: [{begin: '125%', end: '125%'}, {begin: '5%', end: '5%'}],
-                final: [{begin: '50%', end: '125%'}, {begin: p50minus35, end: p50plus23}]
+                final: [{begin: '50%', end: '125%'}, {begin: p50minusRW12, end: p50plusRW}]
             },
             'e': {
                 svg: svgSmall,
                 paths: [circleCenter, lineE],
                 initial: [{begin: '-105%', end: '-105%'}, {begin: '5%', end: '5%'}],
-                final: [{begin: '50%', end: '125% + 1'}, {begin: '50%', end: p50plus23}]
+                final: [{begin: '50%', end: '125% + 1'}, {begin: '50%', end: p50plusRW}]
             },
             'f': {
                 svg: svgFJRT,
                 paths: [circleF, circleF2, lineLeft],
                 initial: [{begin: '-25%', end: '-25%'}, {begin: '1', end: '1'}, {begin: '50% - 13', end: '50% - 13'}],
-                final: [{begin: '-25%', end: '1'}, {begin: '-25%', end: '1'}, {begin: '50% - 13', end: p50plus23}]
+                final: [{begin: '-25%', end: '1'}, {begin: '-25%', end: '1'}, {begin: '50% - 13', end: p50plusRW}]
             },
             'g': {
                 svg: svgSmall,
                 paths: [circleCenter, circleGY, lineRight],
                 initial: [{begin: '25%', end: '25%'}, {begin: '-10%', end: '-10%'}, {begin: '50%', end: '50%'}],
-                final: [{begin: '-50%', end: '25% + 1'}, {begin: '-75% - 1', end: '-50%'}, {begin: '50%', end: p50plus23}]
+                final: [{begin: '-50%', end: '25% + 1'}, {begin: '-75% - 1', end: '-50%'}, {begin: '50%', end: p50plusRW}]
             },
             'h': {
                 svg: svgSmall,
                 paths: [circleCenter, lineLeft, lineRight],
                 initial: [{begin: '-25%', end: '-25%'}, {begin: '10%', end: '10%'}, {begin: '90%', end: '90%'}],
-                final: [{begin: '-150%', end: '-75% + 1'}, {begin: p50minus35, end: '50%'}, {begin: '50%', end: p50plus23}]
+                final: [{begin: '-150%', end: '-75% + 1'}, {begin: p50minusRW12, end: '50%'}, {begin: '50%', end: p50plusRW}]
             },
             'i': {
                 svg: {width: (width - (2 * radius)), height: height},
                 paths: [lineCenter],
                 initial: [{begin: '50%', end: '50%'}],
-                final: [{begin: p50minus23, end: p50plus23}]
+                final: [{begin: p50minusRW, end: p50plusRW}]
             },
             'j': {
                 svg: svgFJRT,
                 paths: [circleJ, lineJ],
-                initial: [{begin: '5%', end: '5%'}, {begin: p50minus23, end: p50minus23}],
-                final: [{begin: '25% - 1', end: '50%'}, {begin: p50minus23, end: p50plus23}]
+                initial: [{begin: '5%', end: '5%'}, {begin: p50minusRW, end: p50minusRW}],
+                final: [{begin: '25% - 1', end: '50%'}, {begin: p50minusRW, end: p50plusRW}]
             },
             'k': {
                 svg: svgSmall,
                 paths: [circleCenter, lineLeft],
                 initial: [{begin: '50%', end: '50%'}, {begin: '80%', end: '80%'}],
-                final: [{begin: '25%', end: '100%'}, {begin: p50minus35, end: p50plus23}]
+                final: [{begin: '25%', end: '100%'}, {begin: p50minusRW12, end: p50plusRW}]
             },
             'l': {
                 svg: {width: (width - (2 * radius)), height: height},
                 paths: [lineCenter],
                 initial: [{begin: '50%', end: '50%'}],
-                final: [{begin: p50minus35, end: p50plus23}]
+                final: [{begin: p50minusRW12, end: p50plusRW}]
             },
             'm': {
                 svg: svgLarge,
                 paths: [circleLeft, circleRight, lineLeftLarge],
                 initial: [{begin: '90%', end: '90%'}, {begin: '90%', end: '90%'}, {begin: '90%', end: '90%'}],
-                final: [{begin: '-25%', end: '50%'}, {begin: '-25%', end: '50%'}, {begin: p50minus23, end: p50plus23}]
+                final: [{begin: '-25%', end: '50%'}, {begin: '-25%', end: '50%'}, {begin: p50minusRW, end: p50plusRW}]
             },
             'n': {
                 svg: svgSmall,
                 paths: [circleCenter, lineLeft],
                 initial: [{begin: '-60%', end: '-60%'}, {begin: '90%', end: '90%'}],
-                final: [{begin: '-25%', end: '50%'}, {begin: p50minus23, end: p50plus23}]
+                final: [{begin: '-25%', end: '50%'}, {begin: p50minusRW, end: p50plusRW}]
             },
             'o': {
                 svg: svgSmall,
@@ -369,20 +369,20 @@ Letters.prototype = {
             'p': {
                 svg: svgSmall,
                 paths: [circleCenter, lineLeft],
-                initial: [{begin: '25%', end: '25%'}, {begin: p50plus23, end: p50plus23}],
+                initial: [{begin: '25%', end: '25%'}, {begin: p50plusRW, end: p50plusRW}],
                 final: [{begin: '-25% - 1', end: '50%'}, {begin: '50%', end: '50% + 46'}]
             },
             'q': {
                 svg: svgSmall,
                 paths: [circleCenter, lineRight],
-                initial: [{begin: '-25%', end: '-25%'}, {begin: p50plus23, end: p50plus23}],
+                initial: [{begin: '-25%', end: '-25%'}, {begin: p50plusRW, end: p50plusRW}],
                 final: [{begin: '-50%', end: '25% + 1'}, {begin: '50%', end: '50% + 46'}]
             },
             'r': {
                 svg: svgFJRT,
                 paths: [circleCenter, lineLeft],
                 initial: [{begin: '-25% - 1', end: '-25% - 1'}, {begin: '50%', end: '50%'}],
-                final: [{begin: '-25% - 1', end: '1'}, {begin: '50%', end: p50plus23}]
+                final: [{begin: '-25% - 1', end: '1'}, {begin: '50%', end: p50plusRW}]
             },
             's': {
                 svg: svgSXZ,
@@ -394,25 +394,25 @@ Letters.prototype = {
                 svg: svgFJRT,
                 paths: [circleCenter, lineLeft, lineT],
                 initial: [{begin: '50%', end: '50%'}, {begin: '5%', end: '5%'}, {begin: '50%', end: '50%'}],
-                final: [{begin: '50%', end: '75% + 1'}, {begin: p50minus35, end: '50%'}, {begin: p50minus20, end: '50%'}]
+                final: [{begin: '50%', end: '75% + 1'}, {begin: p50minusRW12, end: '50%'}, {begin: p50minusR, end: '50%'}]
             },
             'u': {
                 svg: svgSmall,
                 paths: [circleCenter, lineRight],
                 initial: [{begin: '50%', end: '50%'}, {begin: '80%', end: '80%'}],
-                final: [{begin: '25%', end: '100%'}, {begin: p50minus23, end: p50plus23}]
+                final: [{begin: '25%', end: '100%'}, {begin: p50minusRW, end: p50plusRW}]
             },
             'v': {
                 svg: svgSmall,
                 paths: [circleCenter, lineRight],
                 initial: [{begin: '10%', end: '10%'}, {begin: '20%', end: '20%'}],
-                final: [{begin: '25% - 1', end: '100%'}, {begin: p50minus23, end: '50%'}]
+                final: [{begin: '25% - 1', end: '100%'}, {begin: p50minusRW, end: '50%'}]
             },
             'w': {
                 svg: svgLarge,
                 paths: [circleLeft, circleRight, lineRightLarge],
                 initial: [{begin: '10%', end: '10%'}, {begin: '10%', end: '10%'}, {begin: '20%', end: '20%'}],
-                final: [{begin: '25%', end: '100%'}, {begin: '25% - 1', end: '100%'}, {begin: p50minus23, end: '50%'}]
+                final: [{begin: '25%', end: '100%'}, {begin: '25% - 1', end: '100%'}, {begin: p50minusRW, end: '50%'}]
             },
             'x': {
                 svg: svgSXZ,
@@ -423,8 +423,8 @@ Letters.prototype = {
             'y': {
                 svg: svgSmall,
                 paths: [circleCenter, circleGY, lineRight],
-                initial: [{begin: '1', end: '1'}, {begin: '1', end: '1'}, {begin: p50minus23, end: p50minus23}],
-                final: [{begin: '-75%', end: '1'}, {begin: '25% - 1', end: '50%'}, {begin: p50minus23, end: p50plus23}]
+                initial: [{begin: '1', end: '1'}, {begin: '1', end: '1'}, {begin: p50minusRW, end: p50minusRW}],
+                final: [{begin: '-75%', end: '1'}, {begin: '25% - 1', end: '50%'}, {begin: p50minusRW, end: p50plusRW}]
             },
             'z': {
                 svg: svgSXZ,
