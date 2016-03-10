@@ -32,7 +32,8 @@ Letters.prototype = {
     },
 
     drawText: function(){
-        this.letters = this.text.replace(/[^a-z ]/g, '').split('');
+        console.log(this.text);
+        this.letters = this.text.replace(/[^,]+,\s[^,]+/g, '').split('');
         var self = this;
         var size = typeof self.size === 'number' ? self.size : self.size[0];
         var weight = typeof self.weight === 'number' ? self.weight : self.weight[0];
@@ -57,7 +58,7 @@ Letters.prototype = {
                 self.segments[index - spaces] = self.drawLetter(element, index - spaces, size, weight, rounded, color, fade);
             }
         });
-        this.letters = this.text.replace(/[^a-z]/g, '').split('');
+        this.letters = this.text.replace(/[^,]+,\s[^,]+/g, '').split('');
     },
 
     drawLetter: function(letter, index, size, weight, rounded, color, fade){
@@ -92,7 +93,8 @@ Letters.prototype = {
         svg.setAttribute('role', 'img');
         svg.setAttribute('viewBox', '0 0 '+ svgSize.width +' '+ svgSize.height);
         svg.setAttribute('height', size + 'px');
-        svg.setAttribute('width', (svgSize.width * (size / svgSize.height)) + 'px');
+        var width = size * (svgSize.width / svgSize.height);
+        svg.setAttribute('width', Math.ceil(width) + 'px');
         svg.setAttribute('class', 'letter letter-' + letter + (letter !== 'space' ? ' letter-' + (index + 1) : ''));
         this.el.appendChild(svg);
         if(letter !== 'space'){
@@ -250,8 +252,16 @@ Letters.prototype = {
         var radius = 20;
         var _weight = rounded ? 0 : weight / 2;
         var circle = 'm 0 -'+ radius +' a '+ radius +' '+ radius +' 0 1 1 0 '+ (2 * radius) +' a '+ radius +' '+ radius +' 0 1 1 0 -'+ (2 * radius);
+        var circleSmall = 'm 0 -'+ (radius / 2) +' a '+ (radius / 2) +' '+ (radius / 2) +' 0 1 1 0 '+ (-radius);
         var circleCenter = 'm '+ (width / 2) +' '+ (height / 2) +' ' + circle;
-        var circleLeft = 'm '+ (width / 2) +' '+ (height / 2) +' ' + circle;
+        var dot = 'm 10 20 m -1 0 a 1 1 0 1 0 2 0 a 1 1 0 1 0 -2 0';
+        var littleTailE = 'm ' + (width / 2) + ' ' + (height + 2) + circleSmall;
+        var littleTailA = 'm ' + ((width / 2) + 20) + ' ' + (height + 2) + circleSmall;
+        var acute = 'm ' + (width / 2) + ' ' + (height / 4) + ' l ' + (radius / 2) + ' ' + (-radius / 2);
+        var acuteShiftedRight = 'm ' + (width - (radius / 2)) + ' ' + (height / 4) + ' l ' + (radius / 2) + ' ' + (-radius / 2);
+        var acuteShiftedLeft = 'm ' + (width / 4) + ' ' + (height / 4) + ' l ' + (radius / 2) + ' ' + (-radius / 2);
+        var acuteShiftedDown = 'm ' + (((width / 2) - radius) / 2) + ' ' + (radius * 2) + ' l ' + (radius / 2) + ' ' + (-radius / 2);
+        var circleLeft = 'm '+ (width / 2) + 20 +' '+ (height / 2) +' ' + circle;
         var circleRight = 'm '+ ((width / 2) + (2 * radius)) +' '+ (height / 2) +' ' + circle;
         var circleF = 'm '+ (width / 2) +' '+ ((height / 2) - 12) +' ' + circle;
         var circleF2 = 'm '+ (width / 2) +' '+ ((height / 2) + (weight / 2)) +' ' + circle;
@@ -264,6 +274,7 @@ Letters.prototype = {
         var lineRight = 'm '+ ((width / 2) + radius) +' 0 l 0 '+ height;
         var lineRightLarge = 'm '+ ((width / 2) + (3 * radius)) +' 0 l 0 '+ height;
         var lineCenter = 'm '+ ((width / 2) - radius) +' 0 l 0 '+ height;
+        var lineCenterŁ = 'm '+ ((width / 2) - radius) * 2 +' 0 l 0 '+ height;
         var lineE = 'm 0 '+ ((height / 2) + _weight + (_weight ? 0 : 1)) +' l '+ width +' 0';
         var lineJ = 'm '+ ((width / 2) - _weight) +' 0 l 0 '+ height;
         var lineT = 'm 0 '+ ((height / 2) - radius) +' l '+ width +' 0';
@@ -282,6 +293,12 @@ Letters.prototype = {
                 initial: [{begin: '5%', end: '5%'}, {begin: '90%', end: '90%'}],
                 final: [{begin: '50%', end: '125% + 1'}, {begin: '50%', end: p50plus23}]
             },
+            'ą': {
+                svg: svgSmall,
+                paths: [circleCenter, lineRight, littleTailA],
+                initial: [{begin: '5%', end: '5%'}, {begin: '50%', end: '50%'}, {begin: '5%', end: '5%'}],
+                final: [{begin: '50%', end: '125% + 1'}, {begin: '50%', end: p50plus23}, {begin: '28.5%', end: '125% + 1'}]
+            },
             'b': {
                 svg: svgSmall,
                 paths: [circleCenter, lineLeft],
@@ -294,6 +311,12 @@ Letters.prototype = {
                 initial: [{begin: '105%', end: '105%'}],
                 final: [{begin: '-50%', end: '25%'}]
             },
+            'ć': {
+                svg: svgSmall,
+                paths: [circleCenter, acute],
+                initial: [{begin: '105%', end: '105%'}, {begin: '5%', end: '5%'}],
+                final: [{begin: '-50%', end: '25%'}, {begin: '0%', end: '75%'}]
+            },
             'd': {
                 svg: svgSmall,
                 paths: [circleCenter, lineRight],
@@ -305,6 +328,12 @@ Letters.prototype = {
                 paths: [circleCenter, lineE],
                 initial: [{begin: '-105%', end: '-105%'}, {begin: '5%', end: '5%'}],
                 final: [{begin: '50%', end: '125% + 1'}, {begin: '50%', end: p50plus23}]
+            },
+            'ę': {
+                svg: svgSmall,
+                paths: [circleCenter, lineE, littleTailE],
+                initial: [{begin: '-105%', end: '-105%'}, {begin: '5%', end: '5%'}, {begin: '5%', end: '5%'}],
+                final: [{begin: '50%', end: '125% + 1'}, {begin: '50%', end: p50plus23}, {begin: '28.5%', end: '125% + 1'}]
             },
             'f': {
                 svg: svgFJRT,
@@ -348,6 +377,12 @@ Letters.prototype = {
                 initial: [{begin: '50%', end: '50%'}],
                 final: [{begin: p50minus35, end: p50plus23}]
             },
+            'ł': {
+                svg: {width: (width - (2 * radius)) * 2, height: height},
+                paths: [lineCenterŁ, acuteShiftedDown],
+                initial: [{begin: '50%', end: '50%'}, {begin: '5%', end: '5%'}],
+                final: [{begin: p50minus35, end: p50plus23}, {begin: '0%', end: '75%'}]
+            },
             'm': {
                 svg: svgLarge,
                 paths: [circleLeft, circleRight, lineLeftLarge],
@@ -360,11 +395,23 @@ Letters.prototype = {
                 initial: [{begin: '-60%', end: '-60%'}, {begin: '90%', end: '90%'}],
                 final: [{begin: '-25%', end: '50%'}, {begin: p50minus23, end: p50plus23}]
             },
+            'ń': {
+                svg: svgSmall,
+                paths: [circleCenter, lineLeft, acute],
+                initial: [{begin: '-60%', end: '-60%'}, {begin: '90%', end: '90%'}, {begin: '5%', end: '5%'}],
+                final: [{begin: '-25%', end: '50%'}, {begin: p50minus23, end: p50plus23}, {begin: '0%', end: '75%'}]
+            },
             'o': {
                 svg: svgSmall,
                 paths: [circleCenter],
                 initial: [{begin: '-150%', end: '-150%'}],
                 final: [{begin: '2%', end: '98%'}]
+            },
+            'ó': {
+                svg: svgSmall,
+                paths: [circleCenter, acute],
+                initial: [{begin: '-150%', end: '-150%'}, {begin: '5%', end: '5%'}],
+                final: [{begin: '2%', end: '98%'}, {begin: '0%', end: '75%'}]
             },
             'p': {
                 svg: svgSmall,
@@ -389,6 +436,12 @@ Letters.prototype = {
                 paths: [circleSXZ, circleSXZ2],
                 initial: [{begin: '50%', end: '50%'}, {begin: '1', end: '1'}],
                 final: [{begin: '25%', end: '50%'}, {begin: '-25% - 1', end: '1'}]
+            },
+            'ś': {
+                svg: svgSXZ,
+                paths: [circleSXZ, circleSXZ2, acuteShiftedRight],
+                initial: [{begin: '50%', end: '50%'}, {begin: '1', end: '1'}, {begin: '5%', end: '5%'}],
+                final: [{begin: '25%', end: '50%'}, {begin: '-25% - 1', end: '1'}, {begin: '0%', end: '75%'}]
             },
             't': {
                 svg: svgFJRT,
@@ -431,6 +484,18 @@ Letters.prototype = {
                 paths: [circleSXZ, circleSXZ2],
                 initial: [{begin: '25%', end: '25%'}, {begin: '75%', end: '75%'}],
                 final: [{begin: '0', end: '25% + 1'}, {begin: '50%', end: '75%'}]
+            },
+            'ż': {
+                svg: svgSXZ,
+                paths: [circleSXZ, circleSXZ2, dot],
+                initial: [{begin: '25%', end: '25%'}, {begin: '75%', end: '75%'}, {begin: '25%', end: '25%'}],
+                final: [{begin: '0', end: '25% + 1'}, {begin: '50%', end: '75%'}, {begin: '-25%', end: '75%'}]
+            },
+            'ź': {
+                svg: svgSXZ,
+                paths: [circleSXZ, circleSXZ2, acuteShiftedLeft],
+                initial: [{begin: '25%', end: '25%'}, {begin: '75%', end: '75%'}, {begin: '5%', end: '5%'}],
+                final: [{begin: '0', end: '25% + 1'}, {begin: '50%', end: '75%'}, {begin: '0%', end: '75%'}]
             },
             ' ': {
                 svg: svgSmall
