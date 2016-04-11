@@ -32,7 +32,6 @@ Letters.prototype = {
     },
 
     drawText: function(){
-        console.log(this.text);
         this.letters = this.text.replace(/[^,]+,\s[^,]+/g, '').split('');
         var self = this;
         var size = typeof self.size === 'number' ? self.size : self.size[0];
