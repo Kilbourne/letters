@@ -62,9 +62,9 @@ Letters.prototype = {
 
     drawLetter: function(letter, index, size, weight, rounded, color, fade){
         if(letter === ' '){
-            this.createSVG(this.alphabet[letter].svg, 'space', index, size);
+            this.createSVG(this.alphabet[letter].svg, 'space', weight, index, size);
         }else{
-            var svg = this.createSVG(this.alphabet[letter].svg, letter, index, size, fade);
+            var svg = this.createSVG(this.alphabet[letter].svg, letter, weight, index, size, fade);
             var segments = [];
             var pathsD = this.alphabet[letter].paths;
             var initial = this.alphabet[letter].initial;
@@ -86,12 +86,12 @@ Letters.prototype = {
         }
     },
 
-    createSVG: function(svgSize, letter, index, size, fade){
+    createSVG: function(svgSize, letter, weight, index, size, fade){
         var svg = document.createElementNS(this._svgNS, "svg");
         svg.setAttribute('aria-hidden', 'true');
         svg.setAttribute('role', 'img');
         svg.setAttribute('viewBox', '0 0 '+ svgSize.width +' '+ svgSize.height);
-        svg.setAttribute('height', size + 'px');
+        svg.setAttribute('height', size + (1.5 * weight) + 'px');
         var width = size * (svgSize.width / svgSize.height);
         svg.setAttribute('width', Math.ceil(width) + 'px');
         svg.setAttribute('class', 'letter letter-' + letter + (letter !== 'space' ? ' letter-' + (index + 1) : ''));
@@ -253,7 +253,7 @@ Letters.prototype = {
         var circle = 'm 0 -'+ radius +' a '+ radius +' '+ radius +' 0 1 1 0 '+ (2 * radius) +' a '+ radius +' '+ radius +' 0 1 1 0 -'+ (2 * radius);
         var circleSmall = 'm 0 -'+ (radius / 2) +' a '+ (radius / 2) +' '+ (radius / 2) +' 0 1 1 0 '+ (-radius);
         var circleCenter = 'm '+ (width / 2) +' '+ (height / 2) +' ' + circle;
-        var dot = 'm 10 24 m -1 0 a 1 1 0 1 0 2 0 a 1 1 0 1 0 -2 0';
+        var dot = 'm 18 24 m -1 0 a 1 1 0 1 0 2 0 a 1 1 0 1 0 -2 0';
         var littleTailE = 'm ' + (width / 2) + ' ' + (height + 2) + circleSmall;
         var littleTailA = 'm ' + ((width / 2) + 20) + ' ' + (height + 2) + circleSmall;
         var acute = 'm ' + (width / 2) + ' ' + (height / 4) + ' l ' + (radius / 2) + ' ' + (-radius / 2);
@@ -278,6 +278,7 @@ Letters.prototype = {
         var lineE = 'm 0 '+ ((height / 2) + _weight + (_weight ? 0 : 1)) +' l '+ width +' 0';
         var lineJ = 'm '+ ((width / 2) - _weight) +' 0 l 0 '+ height;
         var lineT = 'm 0 '+ ((height / 2) - radius) +' l '+ width +' 0';
+        var svgTall = {width: width, height: (height + 40)};
         var svgSmall = {width: width, height: height};
         var svgLarge = {width: (width + (2 * radius)), height: height};
         var svgFJRT = {width: (width - radius - _weight), height: height};
