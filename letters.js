@@ -32,7 +32,7 @@ Letters.prototype = {
     },
 
     drawText: function(){
-        this.letters = this.text.replace(/[^,]+,\s[^,]+/g, '').split('');
+        this.letters = this.text.replace(/[^a-ząćęłńóśżź]/g, '').split('');
         var self = this;
         var size = typeof self.size === 'number' ? self.size : self.size[0];
         var weight = typeof self.weight === 'number' ? self.weight : self.weight[0];
@@ -57,7 +57,7 @@ Letters.prototype = {
                 self.segments[index - spaces] = self.drawLetter(element, index - spaces, size, weight, rounded, color, fade);
             }
         });
-        this.letters = this.text.replace(/[^,]+,\s[^,]+/g, '').split('');
+        this.letters = this.text.replace(/[^a-ząćęłńóśżź]/g, '').split('');
     },
 
     drawLetter: function(letter, index, size, weight, rounded, color, fade){
